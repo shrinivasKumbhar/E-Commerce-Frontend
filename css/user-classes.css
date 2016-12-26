@@ -1,0 +1,44 @@
+/* User Defined custom classes
+-------------------------------------------------- */
+
+.prodActualPriceLable {
+ color: #727272;
+ text-decoration: line-through;
+  
+}
+.prodAactualPriceLable,.prodDisplayLable {
+	font-size: 1.3rem;
+	padding-left: 10px;
+	display: inline-block;
+	color: gray;
+	padding-left: 5px;
+}
+.prodDisplayName {
+	font-size: 15px;
+	color: black;
+	padding-left: 5px;
+}
+.prodFormLable,.prodPriceLable {
+	font-size: 13px;
+	color: black;
+	padding-left: 5px;
+}
+.productQtyCart {
+	padding-left: 10px;
+	padding-top: 4px;
+}
+.prodQuantity {
+	border-radius: 3px;
+    WIDTH: 50px;
+    height: 30px;
+   }
+ .add-cart-btn {
+	font-size: 12px;
+ }  
+.prodQty_cart_btn{
+    padding-left: 5px;
+}
+.prod_same-height {
+	height:400px;
+	
+}

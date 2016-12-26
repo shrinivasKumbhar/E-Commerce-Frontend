@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="robots" content="all,follow">
+    <meta name="googlebot" content="index,follow,snippet,archive">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Obaju e-commerce template">
+    <meta name="author" content="Ondrej Svestka | ondrejsvestka.cz">
+    <meta name="keywords" content="">
+
+    <title>
+        Obaju : e-commerce template
+    </title>
+
+    <meta name="keywords" content="">
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100' rel='stylesheet' type='text/css'>
+
+    <!-- styles -->
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/owl.carousel.css" rel="stylesheet">
+    <link href="css/owl.theme.css" rel="stylesheet">
+	<link href="css/productSlider.css" rel="stylesheet">
+	<link href="css/user-classes.css" rel="stylesheet">
+  <script src="js/cart/cart.js"></script>
+    <!-- theme stylesheet -->
+    <link href="css/style.default.css" rel="stylesheet" id="theme-stylesheet">
+
+    <!-- your stylesheet with modifications -->
+    <link href="css/custom.css" rel="stylesheet">
+
+    <script src="js/respond.min.js"></script>
+	<script src="js/jquery.js"></script>
+	<!-- <script src="js/jquery.min.js"></script> -->
+
+    <link rel="shortcut icon" href="favicon.png">
+
+
+
+</head>
+<script>
+ $(function(){
+ <!-- alert(); -->
+       $('#navbarId').load("navbar.html");
+	   $('#menuId').load("menu.html");
+   });
+</script>
+<body>
+		
+   <!-- *** NAVBAR ***
+ _________________________________________________________ -->
+
+   
+    <!-- *** NAVBAR END *** -->
+
+    <div class="col-md-12" id="all">
+		
+        <div id="content">
+		<div class="row" id="navbarId"></div>
+		<div class="row" id="menuId"></div>		
+		    <div class="row">
+			
+                <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li><a href="#">Home</a>
+                        </li>
+                        <!-- <li><a href="#">Ladies</a>
+                        </li>
+                        <li><a href="#">Tops</a>
+                        </li>
+                        <li>White Blouse Armani</li> -->
+                    </ul>
+				</div>
+            </div>
+			<div class="row">	
+                <div class="col-md-2">
+                    <!-- *** MENUS AND FILTERS ***
+ _________________________________________________________ -->
+                    <div class="panel panel-default sidebar-menu">
+
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Categories</h3>
+                        </div>
+
+                        <div class="panel-body">
+                            <ul class="nav nav-pills nav-stacked category-menu">
+                                <li>
+                                    <a href="category.html">Men <span class="badge pull-right">42</span></a>
+                                    <ul>
+                                        <li><a href="category.html">T-shirts</a>
+                                        </li>
+                                        <li><a href="category.html">Shirts</a>
+                                        </li>
+                                        <li><a href="category.html">Pants</a>
+                                        </li>
+                                        <li><a href="category.html">Accessories</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="active">
+                                    <a href="category.html">Ladies  <span class="badge pull-right">123</span></a>
+                                    <ul>
+                                        <li><a href="category.html">T-shirts</a>
+                                        </li>
+                                        <li><a href="category.html">Skirts</a>
+                                        </li>
+                                        <li><a href="category.html">Pants</a>
+                                        </li>
+                                        <li><a href="category.html">Accessories</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="category.html">Kids  <span class="badge pull-right">11</span></a>
+                                    <ul>
+                                        <li><a href="category.html">T-shirts</a>
+                                        </li>
+                                        <li><a href="category.html">Skirts</a>
+                                        </li>
+                                        <li><a href="category.html">Pants</a>
+                                        </li>
+                                        <li><a href="category.html">Accessories</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default sidebar-menu">
+
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Brands <a class="btn btn-xs btn-danger pull-right" href="#"><i class="fa fa-times-circle"></i> Clear</a></h3>
+                        </div>
+
+                        <div class="panel-body">
+
+                            <form>
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox">Armani (10)
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox">Versace (12)
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox">Carlo Bruni (15)
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox">Jack Honey (14)
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button>
+
+                            </form>
+
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default sidebar-menu">
+
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Colours <a class="btn btn-xs btn-danger pull-right" href="#"><i class="fa fa-times-circle"></i> Clear</a></h3>
+                        </div>
+
+                        <div class="panel-body">
+
+                            <form>
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> <span class="colour white"></span> White (14)
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> <span class="colour blue"></span> Blue (10)
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> <span class="colour green"></span> Green (20)
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> <span class="colour yellow"></span> Yellow (13)
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> <span class="colour red"></span> Red (10)
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button>
+
+                            </form>
+
+                        </div>
+                    </div>
+
+                    <!-- *** MENUS AND FILTERS END *** -->
+
+                    <div class="banner">
+                        <a href="#">
+                            <img src="img/banner.jpg" alt="sales 2014" class="img-responsive">
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-md-10">
+
+                    <div class="row" id="productSlider">
+                         <div class="col-sm-12">
+                            <div class="box">
+														   
+							<!-- Carousel
+							================================================== -->
+							<div id="myCarousel" class="carousel slide">
+							  <!-- Indicators -->
+							  <ol class="carousel-indicators">
+								<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+								<li data-target="#myCarousel" data-slide-to="1"></li>
+								<li data-target="#myCarousel" data-slide-to="2"></li>
+							  </ol>
+							  <div class="carousel-inner">
+								<div class="item active">
+								  <img src="/assets/example/bg_suburb.jpg" class="img-responsive">
+								  <div class="container">
+									<div class="carousel-caption">
+									  <h1>Bootstrap 3 Carousel Layout</h1>
+									  <pthis is="" an="" example="" layout="" with="" carousel="" that="" uses="" the="" bootstrap="" 3="" styles.<="" small=""><p></p>
+									  <p><a class="btn btn-lg btn-primary" href="http://getbootstrap.com">Learn More</a>
+									</p></pthis></div>
+								  </div>
+								</div>
+								<div class="item">
+								  <img src="http://lorempixel.com/1500/600/abstract/1" class="img-responsive">
+								  <div class="container">
+									<div class="carousel-caption">
+									  <h1>Changes to the Grid</h1>
+									  <p>Bootstrap 3 still features a 12-column grid, but many of the CSS class names have completely changed.</p>
+									  <p><a class="btn btn-large btn-primary" href="#">Learn more</a></p>
+									</div>
+								  </div>
+								</div>
+								<div class="item">
+								  <img src="http://placehold.it/1500X500" class="img-responsive">
+								  <div class="container">
+									<div class="carousel-caption">
+									  <h1>Percentage-based sizing</h1>
+									  <p>With "mobile-first" there is now only one percentage-based grid.</p>
+									  <p><a class="btn btn-large btn-primary" href="#">Browse gallery</a></p>
+									</div>
+								  </div>
+								</div>
+							  </div>
+							  <!-- Controls -->
+							  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+								<span class="icon-prev"></span>
+							  </a>
+							  <a class="right carousel-control" href="#myCarousel" data-slide="next">
+								<span class="icon-next"></span>
+							  </a>  
+							</div>
+							<!-- /.carousel -->
+
+							</div>
+
+						</div>
+					</div>
+
+                    <div class="row" id="productCursole">
+					  <div class="col-md-12">
+					   <div class="box">
+                        <p>
+                            <!-- <h4>Product details</h4>
+                            <p>White lace top, woven, has a round neck, short sleeves, has knitted lining attached</p>
+                            <h4>Material & care</h4>
+                            <ul>
+                                <li>Polyester</li>
+                                <li>Machine wash</li>
+                            </ul>
+                            <h4>Size & Fit</h4>
+                            <ul>
+                                <li>Regular fit</li>
+                                <li>The model (height 5'8" and chest 33") is wearing a size S</li>
+                            </ul> -->
+
+                            <blockquote>
+                                <p><em>Define style this season with Armani's new range of trendy tops, crafted with intricate details. Create a chic statement look by teaming this lace number with skinny jeans and pumps.</em>
+                                </p>
+                            </blockquote>
+
+                            <hr>
+                            <div class="social">
+                                <h4>Show it to your friends</h4>
+                                <p>
+                                    <a href="#" class="external facebook" data-animate-hover="pulse"><i class="fa fa-facebook"></i></a>
+                                    <a href="#" class="external gplus" data-animate-hover="pulse"><i class="fa fa-google-plus"></i></a>
+                                    <a href="#" class="external twitter" data-animate-hover="pulse"><i class="fa fa-twitter"></i></a>
+                                    <a href="#" class="email" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
+                                </p>
+                            </div>
+							</div>
+						</div> 	
+                    </div>
+
+                    <div class="row prod_same-height"">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="box prod_same-height">
+                                <h3>You may also like these products</h3>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-9">
+                            <div class="product prod_same-height">
+                                <div class="flip-container">
+                                    <div class="flipper">
+                                        <div class="front">
+                                            <a href="detail.html">
+                                                <img src="img/product2.jpg" alt="" class="img-responsive">
+                                            </a>
+                                        </div>
+                                        <div class="back">
+                                            <a href="detail.html">
+                                                <img src="img/product2_2.jpg" alt="" class="img-responsive">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="detail.html" class="invisible">
+                                    <img src="img/product2.jpg" alt="" class="img-responsive">
+                                </a>
+                                <div class="col-sm-12" id="prod-show-div1">
+                              						
+								  <div class="col-sm-12">
+									<span class="prodDisplayName">Product One1 </span>
+								  </div>
+								  <div class="col-md-12">
+									<span class="prodFormLable">
+											Form 
+									</span>
+										
+									<span class="prodPriceLable">
+											Rs 10 
+									</span>
+									<span class="prodActualPriceLable">
+											Rs 50 
+									</span>
+									<span class="prodDidscountLable">
+											-80% 
+									</span>
+								  </div>
+							
+								
+								<div class="col-md-12 prod-qty-btn-view-div" id="prod-qty-btn-view-div">
+								  <!-- <div class="col-md-6"> -->
+									<span class="prodQty_cart_btn">Qty: <input type="text" maxlength="3" class="prodQuantity" id="prodQuantityId"/>
+									  	<span  class="add-cart-btn btn btn-default" id="add-cart-btn-id" style="font-size: 12px;">
+											<i class="fa fa-shopping-cart"></i>  <span class="add-to-cart-btn-span">Add To Cart</span>
+										</span>
+									</span>
+								  
+								 </div>
+								
+								<!-- /.product -->
+							</div>
+                                  
+								
+								
+                            </div>
+                            <!-- /.product -->
+                        </div>
+
+                        <div class="col-md-3 col-sm-9">
+                            <div class="product prod_same-height">
+                                <div class="flip-container">
+                                    <div class="flipper">
+                                        <div class="front">
+                                            <a href="detail.html">
+                                                <img src="img/product2.jpg" alt="" class="img-responsive">
+                                            </a>
+                                        </div>
+                                        <div class="back">
+                                            <a href="detail.html">
+                                                <img src="img/product2_2.jpg" alt="" class="img-responsive">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="detail.html" class="invisible">
+                                    <img src="img/product2.jpg" alt="" class="img-responsive">
+                                </a>
+                                <div class="col-sm-12" id="prod-show-div2">
+                              						
+								  <div class="col-sm-12">
+									<span class="prodDisplayName">Product One2 </span>
+								  </div>
+								  <div class="col-md-12">
+									<span class="prodFormLable">
+											Form 
+									</span>
+										
+									<span class="prodPriceLable">
+											Rs 10 
+									</span>
+									<span class="prodActualPriceLable">
+											Rs 50 
+									</span>
+									<span class="prodDidscountLable">
+											-80% 
+									</span>
+								  </div>
+							
+								
+								<div class="col-md-12 prod-qty-btn-view-div" id="prod-qty-btn-view-div">
+								  <!-- <div class="col-md-6"> -->
+									<span class="prodQty_cart_btn">Qty: <input type="text" maxlength="3" class="prodQuantity" id="prodQuantityId"/>
+									  	<span  class="add-cart-btn btn btn-default" id="add-cart-btn-id" style="font-size: 12px;">
+											<i class="fa fa-shopping-cart"></i>  <span class="add-to-cart-btn-span">Add To Cart</span>
+										</span>
+									</span>
+								  
+								 </div>
+								
+								<!-- /.product -->
+							</div>
+                                  
+								
+								
+                            </div>
+                            <!-- /.product -->
+                        </div>
+
+
+                       <div class="col-md-3 col-sm-9">
+                            <div class="product prod_same-height">
+                                <div class="flip-container">
+                                    <div class="flipper">
+                                        <div class="front">
+                                            <a href="detail.html">
+                                                <img src="img/product2.jpg" alt="" class="img-responsive">
+                                            </a>
+                                        </div>
+                                        <div class="back">
+                                            <a href="detail.html">
+                                                <img src="img/product2_2.jpg" alt="" class="img-responsive">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="detail.html" class="invisible">
+                                    <img src="img/product2.jpg" alt="" class="img-responsive">
+                                </a>
+                                <div class="col-sm-12" id="prod-show-div3">
+                              						
+								  <div class="col-sm-12">
+									<span class="prodDisplayName">Product One3 </span>
+								  </div>
+								  <div class="col-md-12">
+									<span class="prodFormLable">
+											Form 
+									</span>
+										
+									<span class="prodPriceLable">
+											Rs 10 
+									</span>
+									<span class="prodActualPriceLable">
+											Rs 50 
+									</span>
+									<span class="prodDidscountLable">
+											-80% 
+									</span>
+								  </div>
+							
+								
+								<div class="col-md-12 prod-qty-btn-view-div" id="prod-qty-btn-view-div">
+								  <!-- <div class="col-md-6"> -->
+									<span class="prodQty_cart_btn">Qty: <input type="text" maxlength="3" class="prodQuantity" id="prodQuantityId"/>
+									  	<span  class="add-cart-btn btn btn-default" id="add-cart-btn-id" style="font-size: 12px;">
+											<i class="fa fa-shopping-cart"></i>  <span class="add-to-cart-btn-span">Add To Cart</span>
+										</span>
+									</span>
+								  
+								 </div>
+								
+								<!-- /.product -->
+							</div>
+                                  
+								
+								
+                            </div>
+                            <!-- /.product -->
+                        </div>
+
+                    </div>
+
+                    <div class="row prod_same-height-row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="box prod_same-height">
+                                <h3>Products viewed recently</h3>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3 col-sm-9">
+                            <div class="product prod_same-height">
+                                <div class="flip-container">
+                                    <div class="flipper">
+                                        <div class="front">
+                                            <a href="detail.html">
+                                                <img src="img/product2.jpg" alt="" class="img-responsive">
+                                            </a>
+                                        </div>
+                                        <div class="back">
+                                            <a href="detail.html">
+                                                <img src="img/product2_2.jpg" alt="" class="img-responsive">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="detail.html" class="invisible">
+                                    <img src="img/product2.jpg" alt="" class="img-responsive">
+                                </a>
+                                <div class="col-sm-12" id="prod-show-div5">
+                              						
+								  <div class="col-sm-12">
+									<span class="prodDisplayName">Product One4 </span>
+								  </div>
+								  <div class="col-md-12">
+									<span class="prodFormLable">
+											Form 
+									</span>
+										
+									<span class="prodPriceLable">
+											Rs 10 
+									</span>
+									<span class="prodActualPriceLable">
+											Rs 50 
+									</span>
+									<span class="prodDidscountLable">
+											-80% 
+									</span>
+								  </div>
+							
+								
+								<div class="col-md-12 prod-qty-btn-view-div" id="prod-qty-btn-view-div">
+								  <!-- <div class="col-md-6"> -->
+									<span class="prodQty_cart_btn">Qty: <input type="text" maxlength="3" class="prodQuantity" id="prodQuantityId"/>
+									  	<span  class="add-cart-btn btn btn-default" id="add-cart-btn-id" style="font-size: 12px;">
+											<i class="fa fa-shopping-cart"></i>  <span class="add-to-cart-btn-span">Add To Cart</span>
+										</span>
+									</span>
+								  
+								 </div>
+								
+								<!-- /.product -->
+							</div>
+                                  
+								
+								
+                            </div>
+                            <!-- /.product -->
+                        </div>
+
+                        <div class="col-md-3 col-sm-9">
+                            <div class="product prod_same-height">
+                                <div class="flip-container">
+                                    <div class="flipper">
+                                        <div class="front">
+                                            <a href="detail.html">
+                                                <img src="img/product2.jpg" alt="" class="img-responsive">
+                                            </a>
+                                        </div>
+                                        <div class="back">
+                                            <a href="detail.html">
+                                                <img src="img/product2_2.jpg" alt="" class="img-responsive">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="detail.html" class="invisible">
+                                    <img src="img/product2.jpg" alt="" class="img-responsive">
+                                </a>
+                                <div class="col-sm-12" id="prod-show-div6">
+                              						
+								  <div class="col-sm-12">
+									<span class="prodDisplayName">Product One5 </span>
+								  </div>
+								  <div class="col-md-12">
+									<span class="prodFormLable">
+											Form 
+									</span>
+										
+									<span class="prodPriceLable">
+											Rs 10 
+									</span>
+									<span class="prodActualPriceLable">
+											Rs 50 
+									</span>
+									<span class="prodDidscountLable">
+											-80% 
+									</span>
+								  </div>
+							
+								
+								<div class="col-md-12 prod-qty-btn-view-div" id="prod-qty-btn-view-div">
+								  <!-- <div class="col-md-6"> -->
+									<span class="prodQty_cart_btn">Qty: <input type="text" maxlength="3" class="prodQuantity" id="prodQuantityId"/>
+									  	<span  class="add-cart-btn btn btn-default" id="add-cart-btn-id" style="font-size: 12px;">
+											<i class="fa fa-shopping-cart"></i>  <span class="add-to-cart-btn-span">Add To Cart</span>
+										</span>
+									</span>
+								  
+								 </div>
+								
+								<!-- /.product -->
+							</div>
+                                  
+								
+								
+                            </div>
+                            <!-- /.product -->
+                        </div>
+
+
+                        <div class="col-md-3 col-sm-9">
+                            <div class="product prod_same-height">
+                                <div class="flip-container">
+                                    <div class="flipper">
+                                        <div class="front">
+                                            <a href="detail.html">
+                                                <img src="img/product2.jpg" alt="" class="img-responsive">
+                                            </a>
+                                        </div>
+                                        <div class="back">
+                                            <a href="detail.html">
+                                                <img src="img/product2_2.jpg" alt="" class="img-responsive">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="detail.html" class="invisible">
+                                    <img src="img/product2.jpg" alt="" class="img-responsive">
+                                </a>
+                                <div class="col-sm-12" id="prod-show-div7">
+                              						
+								  <div class="col-sm-12">
+									<span class="prodDisplayName">Product One6 </span>
+								  </div>
+								  <div class="col-md-12">
+									<span class="prodFormLable">
+											Form 
+									</span>
+										
+									<span class="prodPriceLable">
+											Rs 10 
+									</span>
+									<span class="prodActualPriceLable">
+											Rs 50 
+									</span>
+									<span class="prodDidscountLable">
+											-80% 
+									</span>
+								  </div>
+							
+								
+								<div class="col-md-12 prod-qty-btn-view-div" id="prod-qty-btn-view-div">
+								  <!-- <div class="col-md-6"> -->
+									<span class="prodQty_cart_btn">Qty: <input type="text" maxlength="3" class="prodQuantity" id="prodQuantityId"/>
+									  	<span  class="add-cart-btn btn btn-default" id="add-cart-btn-id" style="font-size: 12px;">
+											<i class="fa fa-shopping-cart"></i>  <span class="add-to-cart-btn-span">Add To Cart</span>
+										</span>
+									</span>
+								  
+								 </div>
+								
+								<!-- /.product -->
+							</div>
+                                  
+								
+								
+                            </div>
+                            <!-- /.product -->
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- /.col-md-10 -->
+			
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#content -->
+
+
+        <!-- *** FOOTER ***
+ _________________________________________________________ -->
+        <div id="footer" data-animate="fadeInUp">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6">
+                        <h4>Pages</h4>
+
+                        <ul>
+                            <li><a href="text.html">About us</a>
+                            </li>
+                            <li><a href="text.html">Terms and conditions</a>
+                            </li>
+                            <li><a href="faq.html">FAQ</a>
+                            </li>
+                            <li><a href="contact.html">Contact us</a>
+                            </li>
+                        </ul>
+
+                        <hr>
+
+                        <h4>User section</h4>
+
+                        <ul>
+                            <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
+                            </li>
+                            <li><a href="register.html">Regiter</a>
+                            </li>
+                        </ul>
+
+                        <hr class="hidden-md hidden-lg hidden-sm">
+
+                    </div>
+                    <!-- /.col-md-3 -->
+
+                    <div class="col-md-3 col-sm-6">
+
+                        <h4>Top categories</h4>
+
+                        <h5>Men</h5>
+
+                        <ul>
+                            <li><a href="category.html">T-shirts</a>
+                            </li>
+                            <li><a href="category.html">Shirts</a>
+                            </li>
+                            <li><a href="category.html">Accessories</a>
+                            </li>
+                        </ul>
+
+                        <h5>Ladies</h5>
+                        <ul>
+                            <li><a href="category.html">T-shirts</a>
+                            </li>
+                            <li><a href="category.html">Skirts</a>
+                            </li>
+                            <li><a href="category.html">Pants</a>
+                            </li>
+                            <li><a href="category.html">Accessories</a>
+                            </li>
+                        </ul>
+
+                        <hr class="hidden-md hidden-lg">
+
+                    </div>
+                    <!-- /.col-md-3 -->
+
+                    <div class="col-md-3 col-sm-6">
+
+                        <h4>Where to find us</h4>
+
+                        <p><strong>Obaju Ltd.</strong>
+                            <br>13/25 New Avenue
+                            <br>New Heaven
+                            <br>45Y 73J
+                            <br>England
+                            <br>
+                            <strong>Great Britain</strong>
+                        </p>
+
+                        <a href="contact.html">Go to contact page</a>
+
+                        <hr class="hidden-md hidden-lg">
+
+                    </div>
+                    <!-- /.col-md-3 -->
+
+
+
+                    <div class="col-md-3 col-sm-6">
+
+                        <h4>Get the news</h4>
+
+                        <p class="text-muted">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+
+                        <form>
+                            <div class="input-group">
+
+                                <input type="text" class="form-control">
+
+                                <span class="input-group-btn">
+
+			    <button class="btn btn-default" type="button">Subscribe!</button>
+
+			</span>
+
+                            </div>
+                            <!-- /input-group -->
+                        </form>
+
+                        <hr>
+
+                        <h4>Stay in touch</h4>
+
+                        <p class="social">
+                            <a href="#" class="facebook external" data-animate-hover="shake"><i class="fa fa-facebook"></i></a>
+                            <a href="#" class="twitter external" data-animate-hover="shake"><i class="fa fa-twitter"></i></a>
+                            <a href="#" class="instagram external" data-animate-hover="shake"><i class="fa fa-instagram"></i></a>
+                            <a href="#" class="gplus external" data-animate-hover="shake"><i class="fa fa-google-plus"></i></a>
+                            <a href="#" class="email external" data-animate-hover="shake"><i class="fa fa-envelope"></i></a>
+                        </p>
+
+
+                    </div>
+                    <!-- /.col-md-3 -->
+
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#footer -->
+
+        <!-- *** FOOTER END *** -->
+
+
+
+
+        <!-- *** COPYRIGHT ***
+ _________________________________________________________ -->
+        <div id="copyright">
+            <div class="container">
+                <div class="col-md-6">
+                    <p class="pull-left">© 2015 Your name goes here.</p>
+
+                </div>
+                <div class="col-md-6">
+                    <p class="pull-right">Template by <a href="https://bootstrapious.com/e-commerce-templates">Bootstrapious.com</a>
+                         <!-- Not removing these links is part of the license conditions of the template. Thanks for understanding :) If you want to use the template without the attribution links, you can do so after supporting further themes development at https://bootstrapious.com/donate  -->
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- *** COPYRIGHT END *** -->
+
+
+
+    </div>
+    <!-- /#all -->
+
+
+    
+
+    <!-- *** SCRIPTS TO INCLUDE ***
+ _________________________________________________________ -->
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script src="js/waypoints.min.js"></script>
+    <script src="js/modernizr.js"></script>
+    <script src="js/bootstrap-hover-dropdown.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/front.js"></script>
+
+
+
+
+
+
+</body>
+
+</html>
