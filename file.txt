@@ -1,0 +1,529 @@
+ActiveAdmin.register Product do
+ 
+ actions :index, :show, :edit, :update, :destroy
+  filter :id_in, :as => :select, :collection => proc{Topic.all.where('is_active != false').collect {|o| [o.topic_name, o.id]}}
+  filter :product_name
+  filter :product_domain
+  filter :created_by, :as => :select, :collection => proc{User.all.where('is_active != false').collect {|o| [o.name, o.id]}}
+  filter :updated_by, :as => :select, :collection => proc{User.all.where('is_active != false').collect {|o| [o.name, o.id]}}
+  filter :is_active
+ 
+ controller do
+   def scoped_collection
+     Product.unscoped
+   end
+ 
+   def permitted_params
+     params.permit :utf8, :_method, :authenticity_token, :commit, :id, product: [:id, :product_name, :product_domain, :description, :topic, :remote_image_url, :created_by, :updated_by, :is_active, :is_primary, product_images_attributes: [:id, :product_id, :image, :remote_image, :image_type, :is_active , :_destroy], topic_products_attributes:[:id, :topic_id, :product_id, :created_by, :updated_by]]
+   end
+ 
+   def destroy
+      begin
+        product_instance = Product.find_by_id(resource.id)
+        if product_instance.present?
+          Product.transaction do
+            if !product_instance.recos.update_all(:is_active => false)
+              flash[:notice] = "Unfortunately product is not inactive. Please try again."
+              redirect_to admin_products_path
+            end
+            if !product_instance.boards_products.update_all(:is_active => false)
+              flash[:notice] = "Unfortunately product is not inactive. Please try again."
+              redirect_to admin_products_path
+            end
+ 
+            message_list = product_instance.messages
+            message_list.each do |msg_obj|
+              discussion = Discussion.find_by_id(msg_obj.discussion_id)
+              count = discussion.messages.count
+              if count == 1
+                if msg_obj.votes.update_all(:is_active => false)
+                  if msg_obj.update(:is_active => false)
+                    activities = Activity.where(:discussion_id => discussion.id)
+                    activities.each do |activity_obj|
+                      if !activity_obj.update(:is_active => false)
+                        flash[:notice] = "Unfortunately product is not inactive. Please try again."
+                        redirect_to admin_products_path
+                      end
+                    end
+                    if !discussion.update(:is_active => false)
+                      flash[:notice] = "Unfortunately product is not inactive. Please try again."
+                      redirect_to admin_products_path
+                    end
+                  else
+                    flash[:notice] = "Unfortunately product is not inactive. Please try again."
+                    redirect_to admin_products_path
+                  end
+                else
+                  flash[:notice] = "Unfortunately product is not inactive. Please try again."
+                  redirect_to admin_products_path
+                end
+              else
+                first_message_instance = discussion.messages.order('id ASC').first
+                if first_message_instance.id == msg_obj.id
+                  if msg_obj.votes.update_all(:is_active => false)
+                    if msg_obj.update(:is_active => false)
+                      activities = Activity.where(:discussion_id => discussion.id)
+                      activities.each do |activity_obj|
+                        if !activity_obj.update(:is_active => false)
+                          flash[:notice] = "Unfortunately product is not inactive. Please try again."
+                          redirect_to admin_products_path
+                        end
+                      end
+                      if !discussion.update(:is_active => false)
+                        flash[:notice] = "Unfortunately product is not inactive. Please try again."
+                        redirect_to admin_products_path
+                      end
+                    else
+                      flash[:notice] = "Unfortunately product is not inactive. Please try again."
+                      redirect_to admin_products_path
+                    end
+                  else
+                    flash[:notice] = "Unfortunately product is not inactive. Please try again."
+                    redirect_to admin_products_path
+                  end
+                else
+                  if msg_obj.votes.update_all(:is_active => false)
+                    if msg_obj.update(:is_active => false)
+                      activities = Activity.where(:message_id => msg_obj.id)
+                      activities.each do |activity_obj|
+                        if !activity_obj.update(:is_active => false)
+                          flash[:notice] = "Unfortunately product is not inactive. Please try again."
+                          redirect_to admin_products_path
+                        end
+                      end
+                    else
+                      flash[:notice] = "Unfortunately product is not inactive. Please try again."
+                      redirect_to admin_products_path
+                    end
+                  else
+                    flash[:notice] = "Unfortunately product is not inactive. Please try again."
+                    redirect_to admin_products_path
+                  end
+                end
+              end
+            end
+            topic_products = TopicProduct.where(:product_id => resource.id)
+            topic_products.each do |topic_product_obj|
+              if !topic_product_obj.update(:is_active => false)
+                flash[:notice] = "Unfortunately product is not inactive. Please try again."
+                redirect_to admin_products_path
+              end
+            end
+ 
+            if product_instance.update(:is_active => false)
+              flash[:notice] = "Product is inactive."
+              redirect_to admin_products_path
+            else
+              flash[:notice] = "Unfortunately product is not inactive. Please try again."
+              redirect_to admin_products_path
+            end
+ 
+          end
+        end
+      rescue => e
+        Rails.logger.info"#{__FILE__}:#{__LINE__} Exception: #{e.message}"
+        flash[:notice] = "Unfortunately product is not inactive. Please try again."
+        redirect_to admin_products_path
+      end
+   end
+ 
+ end
+ 
+ collection_action :set_as_primary_image, :method => :post do
+   begin
+     if params[:id].present? && params[:url].present?
+       product_instance = Product.find(params[:id])
+       if product_instance.present?
+         Product.transaction do
+           if product_instance.update(:remote_image_url => params[:url])
+             if product_instance.product_images.update_all(:image_type => 'SUPPORTING')
+               product_image_instance = ProductImage.find_by_id(params[:product_image_id])
+               if product_image_instance.update(:image_type =>  'PRIMARY')
+                 flash[:notice] = I18n.translate :admin_primary_image_added_to_product
+                 redirect_to admin_products_path
+               else
+                 flash[:notice] = I18n.translate :admin_on_error_primary_image_added_to_product
+                 redirect_to admin_products_path
+               end
+             else
+               flash[:notice] = I18n.translate :admin_on_error_primary_image_added_to_product
+               redirect_to admin_products_path
+             end
+             else
+             flash[:notice] = I18n.translate :admin_on_error_primary_image_added_to_product
+             redirect_to admin_products_path
+           end
+        end
+       else
+         flash[:notice] = I18n.translate :admin_on_error_primary_image_added_to_product
+         redirect_to admin_products_path
+       end
+     else
+       flash[:notice] = I18n.translate :admin_on_error_primary_image_added_to_product
+       redirect_to admin_products_path
+     end
+   rescue => e
+     Rails.logger.info"#{__FILE__}:#{__LINE__} Exception: #{e.message}"
+     flash[:notice] = I18n.translate :admin_on_error_primary_image_added_to_product
+     redirect_to admin_products_path
+   end
+ end
+ 
+ collection_action :active_product, :method => :post do
+   begin
+     product_instance = Product.unscoped.find_by_id(params[:id])
+     if product_instance.present?
+         if product_instance.update(:is_active => true)
+           flash[:notice] = I18n.translate :admin_product_active
+           redirect_to admin_products_path
+         else
+           flash[:notice] = I18n.translate :admin_on_error_product_active
+           redirect_to admin_products_path
+         end
+     else
+       flash[:notice] = I18n.translate :admin_on_error_product_active
+       redirect_to admin_products_path
+     end
+ 
+   rescue => e
+     Rails.logger.info"#{__FILE__}:#{__LINE__} Exception: #{e.message}"
+     flash[:notice] = I18n.translate :admin_on_error_product_active
+     redirect_to admin_products_path
+   end
+ end
+ 
+ 
+ index do
+    selectable_column
+    id_column
+    column :product_name
+    column :product_domain
+    column :description
+    column "Primary Image" do |remote_image_obj|
+      link_to image_tag(remote_image_obj.remote_image_url, :height => 50), remote_image_obj.remote_image_url , target: '_blank' unless remote_image_obj.remote_image_url.blank?
+    end
+    column :product_images do |product|
+      table_for product.product_images do
+        column do |product_image_obj|
+          links = ''.html_safe
+          #link_to product_image_obj.image.url , [ :admin, product_image_obj ] unless product_image_obj.image.blank?
+          links += link_to image_tag(product_image_obj.remote_image, :height => 50), product_image_obj.remote_image , target: '_blank'  unless product_image_obj.remote_image.blank?
+          links += link_to "Set as primary?", set_as_primary_image_admin_products_path(:product_image_id => product_image_obj.id, :url => product_image_obj.remote_image, :id => product.id),method: :post, :style => 'display:block !important;'
+          links
+        end
+      end
+    end
+    column 'recos' do |product|
+      product_instance = Product.find_by_id(product.id)
+      if product_instance.present?
+        product_instance.recos.count
+      end
+    end
+   
+   column 'Topic' do |product|
+      product_instance = Product.find_by_id(product.id)
+      if product_instance.present?
+        topic_products = TopicProduct.find_by_product_id(product_instance.id)
+        if topic_products.present?
+          topic = Topic.find_by_id(topic_products.topic_id)
+          if topic.present?
+            topic.topic_name
+          end
+        end
+      end
+    end
+    column 'Created By' do |created_by_user|
+      User.find_by_id(created_by_user.created_by)  unless created_by_user.created_by.blank?
+    end
+    column 'updated By' do |updated_by_user|
+      User.find_by_id(updated_by_user.updated_by)  unless updated_by_user.updated_by.blank?
+    end
+    column :is_active
+ 
+ 
+ 
+      column "" do |resource|
+        links = ''.html_safe
+        #links += link_to I18n.t('active_admin.view'), resource_path(resource), class: "member_link show_link"
+        #if !resource.funded?
+        links += link_to I18n.t('active_admin.edit'), edit_resource_path(resource), class: "member_link edit_link"
+        if resource.is_active.present?
+          links += link_to 'Delete', resource_path(resource), method: :delete, confirm: I18n.t('active_admin.delete_confirmation'), class: "member_link delete_link"
+        else
+          links += link_to 'Active', active_product_admin_products_path(:id => resource.id), method: :post
+        end
+ 
+        links
+      end
+ 
+   # actions
+  end
+ 
+  form do |f|
+    f.inputs " Product " do
+      f.input :product_name
+      f.input :description
+      f.input :image_url
+      f.input :remote_image_url
+      f.input :created_by
+      f.input :updated_by
+      f.inputs "product_images" do
+        f.has_many :product_images do |p|
+          if p.object.image.blank?
+            p.input :image, :as => :file
+            p.input :image_type, :as => :hidden, :input_html => { :value => 'SUPPORTING' }
+          else
+            p.input :image, :as => :file , :hint => p.template.image_tag(p.object.image.url, :height => 50) unless p.object.image.blank?
+          end
+        end
+      end
+     
+      f.inputs 'topic_products' do
+        f.has_many :topic_products do |obj, index|
+            obj.input :topic_id, :label => 'Topic', :as => :select, :collection => Topic.all.where(:is_active => true).map{|u| [u.topic_name, u.id]}
+            obj.input :created_by, :input_html => { :value => resource.created_by }
+            obj.input :updated_by, :input_html => { :value => resource.updated_by }
+        end
+      end
+    end
+    f.actions
+  end
+ 
+ EN application.html.haml
+ 
+ !!!
+%html
+  %head
+    %title= meta_title
+    %link{rel: "shortcut icon", href: image_path("favicon.png"), type: "image/png"}
+
+    = stylesheet_link_tag    "application", media: "all"
+    = javascript_include_tag "application"
+    = javascript_include_tag "http://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"
+    = javascript_include_tag "http://cdn.jsdelivr.net/webshim/1.12.4/polyfiller.js"
+    = javascript_include_tag "http://code.jquery.com/ui/1.11.4/jquery-ui.js"
+    = javascript_include_tag "jquery.fancybox.js"
+    = javascript_include_tag "custom_image_box"
+    = javascript_include_tag "cropbox.js"
+    = javascript_include_tag 'croppost.js'
+    = javascript_include_tag 'cropprofile.js'
+    = javascript_include_tag "profile.js"
+    = javascript_include_tag "stream.js"
+    = javascript_include_tag "matches.js"
+    = javascript_include_tag "profileUpload.js"
+    = javascript_include_tag "chatting"
+    = javascript_include_tag "jquery.mCustomScrollbar.concat.min"
+    = javascript_include_tag "reconnecting-websocket"
+    = javascript_include_tag "simplePlayer.js"
+    = stylesheet_link_tag 'style'
+    = stylesheet_link_tag 'search_friend'
+    = stylesheet_link_tag 'about_tab'
+    = stylesheet_link_tag 'matches'
+    = stylesheet_link_tag 'streams'
+    = stylesheet_link_tag 'jquery.mCustomScrollbar.min'
+    = stylesheet_link_tag 'jquerysctipttop'
+    = stylesheet_link_tag 'http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css'
+    = csrf_meta_tags
+
+  %body
+    .modalOverlay
+      .modal-box1
+        #popupClose
+          %a.js-modal-close.close{":data-target" => ""}
+        .popupCls
+          .modal-body
+            %input{:type => "hidden", :id => "reloadPage", :value => "0"}
+            %p      
+    - if current_user.present?
+      %input{:type => "hidden", :id => "login_user_id", :value => "#{current_user.id}"}
+    %nav.main-nav
+      %h1.brand= link_to "Epic Night", root_path
+
+      .mainMenu
+        %ul
+          %li{class: @active_tab == 'drinking_games' ? 'active' : nil}
+            = link_to "Drinking Games", drinking_game_categories_path
+            .active-item.dice
+
+          %li{class: @active_tab == 'drinks' ? 'active' : nil}
+            = link_to "Drinks", drink_categories_path
+            .active-item.drink
+
+          %li{class: @active_tab == 'locations' ? 'active' : nil}
+            = link_to "Photos & Clubs", location_categories_path
+            .active-item.city
+      %section.menuSection
+        .sideMenu
+          %ul.sideMenuNav
+            - if current_user.present?
+              - if current_user.dob.present?
+                - if current_user.dob.strftime("%Y/%m/%d") != "1888/01/01" && current_user.dob.present? && current_user.last_name != "last_name" && current_user.last_name.present? && current_user.gender != "gender" && current_user.gender.present? && current_user.city != "city" && current_user.city.present? 
+                              
+                  %li
+                    = link_to user_profiles_path do
+                      Profile
+                    -# profile_pic = current_user.user_photos.where(:type => "PROFILEPIC", :status => "ACTIVE")[0]
+                    -#if profile_pic.present?
+                      -profile_pic_url = profile_pic.image_url
+                    -#else
+                      -if current_user.gender == "Male"
+                        -profile_pic_url = "/assets/slider/default-profile-image-male.png"
+                      -else
+                        -profile_pic_url = "/assets/slider/default-profile-image-female.png"
+                    -# image = UserPhoto.new.get_default_profile_pic(current_user)
+                    -# link_to user_profiles_path, :class => "userProfileImg" do
+                      .menuProfileImage{:style => "background-size: 100% 100%; background-image:url('#{profile_pic_url}'); background-repeat: no-repeat; background-position: center center;"}
+                        -#%img.menuProfileImg{:src => "#{profile_pic_url}", :onerror=>" this.src='#{image}'"}/
+                  %li
+                    = link_to 'Logout', destroy_user_session_path, {method: :delete}
+                - else
+                  %li
+                    = link_to 'Logout', destroy_user_session_path, {method: :delete}
+                  :javascript
+                    $( document ).ready(function(){
+                      if(window.location.href != 'http://'+location.host+'/users/edit')
+                      setTimeout(function(){ window.location = 'users/edit'; }, 2000);
+                    });
+              - else
+                %li
+                  = link_to 'Logout', destroy_user_session_path, {method: :delete}
+                :javascript
+                  $( document ).ready(function(){
+                    if(window.location.href != 'http://'+location.host+'/users/edit')
+                    setTimeout(function(){ window.location = 'users/edit'; }, 2000);
+                  });
+            - else
+              %li
+                = link_to "Sign Up", new_user_registration_path
+              %li
+                %a#loginLink{:href => "#"} Login
+          - if current_user.try(:is_admin?)
+            %ul.secondary
+              -# %li
+                = link_to 'Profile', user_profiles_path
+              %li= link_to "Admin", admin_root_path
+    .loginDiv{:hidden => true}
+      = form_for :user, method: "post", url: new_user_session_path, :html => {:id => "loginFormId"},:format => :json,
+                     :remote => true do |f|
+        .field
+          = f.email_field :email, :placeholder => "Email", autofocus: true
+        .field
+          = f.password_field :password, :placeholder => "Password", autocomplete: "off"
+
+        .actions
+          .loginBtnDiv
+            = f.submit "Login", :class => "btn loginBtn"
+            .clearfix
+            #facebookLogin
+              = link_to '', user_omniauth_authorize_path(:facebook)
+            #twitterLogin
+              = link_to '', user_omniauth_authorize_path(:twitter)
+    .wrapper
+      - if notice
+        .notification.notice= notice
+
+      - if alert
+        .notification.alert= alert
+
+      .main-content
+        = yield
+
+
+    %footer.global-footer
+      .wrapper
+        %p &copy; ASocialWeb #{Time.now.year}
+        %p
+          = "EpicNight is a source of information and not responsible for the behaviour of website visitors."
+          = link_to "Please Drink Responsibly.", "http://drinkaware.co.uk/", target: "_blank"
+        .footer-links
+          .links
+            %span
+              = link_to "Contact", {:controller => 'contacts'}
+            %span
+              = link_to "Copyright", {:controller => 'copyrights'}
+            %span
+              = link_to "Taxi Numbers", {:controller => 'taxi_numbers', :action => 'index'}
+          .socials            
+            %a{:href => "https://www.youtube.com/channel/UCAn5LSSVNpjFjJ86dzrEhmg", :target => "_blank"}
+              %img{:alt => "", :src => "/assets/youtube.png"}/
+            %a{:href => "https://www.facebook.com/epicnightuk/", :target => "_blank"}
+              %img{:alt => "", :src => "/assets/facebook.png"}/
+            %a{:href => "https://twitter.com/epicnightuk", :target => "_blank"}
+              %img{:alt => "", :src => "/assets/twitter.png"}/
+            %a{:href => "https://www.instagram.com/epicnightuk/?hl=en", :target => "_blank"}
+              %img{:alt => "", :src => "/assets/instagram.png"}/
+    :javascript
+      $('.modal-box1 #popupClose a').click(function(){
+          $('.modalOverlay').fadeOut();
+          if($('#reloadPage').val() == 1){
+            location.reload();
+          }
+      });
+      $('#loginLink').click(function(){
+          $('.loginDiv').toggle();
+
+      });
+      $("form#loginFormId").bind("ajax:success", function(e, data, status, xhr) {
+        if (data.success) {
+          console.log("Data :",JSON.stringify(data));
+          window.location = data.redirect;
+          return $('#submit_comment').slideToggle(1000, "easeOutBack");
+        } else {
+            $('.modalOverlay .modal-box1 p').text('Invalid email or password!');
+            $('#reloadPage').val(0);
+            $('.modalOverlay').fadeIn(500);
+        }
+      });
+      $("#video").simplePlayer();
+      webshims.setOptions('waitReady', false);
+      webshims.setOptions('forms-ext', {types: 'date'});
+      webshims.polyfill('forms forms-ext');
+	 
+	 
+	  
+	  def check_authorization
+    Rails.logger.info "#{__FILE__}:#{__LINE__} check_authorization start"
+    Rails.logger.debug {"#{__FILE__}:#{__LINE__} header: #{request.headers['Access-Token']}"}
+    token = request.headers['Access-Token']
+    api_key = ApiKey.find_by_access_token(token)
+    Rails.logger.debug {"#{__FILE__}:#{__LINE__} api_key: #{api_key}"}
+    if !api_key.present?
+      message = I18n.translate :unauthorised_access
+      render :json => {:success => false, :message => message}
+    else
+      @current_user = User.find_by_id(api_key.user_id)
+    end
+    #head :unauthorized unless api_key
+    Rails.logger.info "#{__FILE__}:#{__LINE__} check_authorization end"
+  end
+	  
+	  
+	  def generate_access_token(user_id)
+    Rails.logger.info "#{__FILE__}:#{__LINE__} generate_access_token Start"
+    random_token = SecureRandom.hex
+    begin
+      api_key_instance = ApiKey.find_by_access_token(random_token)
+      if(api_key_instance.present?)
+        random_token = SecureRandom.hex
+      else
+        break
+      end
+    end until true
+    api_key_data_instance = ApiKey.find_by_user_id(user_id)
+    if(api_key_data_instance.present?)
+      api_key_data = api_key_data_instance.update(:access_token => random_token)
+    else
+      api_key_data = ApiKey.create(:user_id => user_id, :access_token => random_token)
+    end
+    #access_token_data = ApiKey.find_by_user_id(user_id)
+    return random_token
+  end
+	  
+	  
+	  gem 'bcrypt-ruby', '~> 3.0.0', :require => "bcrypt"
+	  password = BCrypt::Password.create(params[:password])
+ 
+
+ 
+ 
+end
